@@ -7,7 +7,7 @@
 ---
 
 ### Contents
-[1. QuirkyScript 1](#1. QuirkyScript 1)
+1. QuirkyScript 1
 2. QuirkyScript 2
 3. QuirkyScript 3
 4. QuirkyScript 4
@@ -113,7 +113,7 @@ Regexp info [source] (http://www.regular-expressions.info/anchors.html)
 ^ - matches the position before the first character in the string. 
 $ - matches right after the last character in the string 
 g - global match; find all matches rather than stopping after the first match
-
+```
 Apparently the Regexp object keeps track of the last index where the match occured when the global (g) flag is used.
 therfore, when the test method is executed the second time, it will return false even though the string being tested
 is still the same. [More info](https://stackoverflow.com/questions/1520800/why-does-a-regexp-with-global-flag-give-wrong-results)
@@ -127,3 +127,4 @@ Flag: >CrossCTF{1_am_n1k0las_ray_zhizihizhao}
 
 Team J2K
 
+Disclaimer: this writeup is purely for the authors' reference and does not provide a full list of the challenges.
