@@ -74,11 +74,10 @@ we found out that the sorting order is according to string unicode points. Hence
 (20 has a smaller unicode value than 3 but has a larger numerical value than 3), we are able to get the flag.
 Other value pairs such as 11 and 2 will work as well.
 
-Final link to get flag: >http://ctf.pwn.sg:8083/flag?third=20&third=3
+Final link to get flag: > http://ctf.pwn.sg:8083/flag?third=20&third=3
 
 
-Flag: >CrossCTF{th4t_r0ck3t_1s_hug3}
-
+Flag: > CrossCTF{th4t_r0ck3t_1s_hug3}
 
 
 #### 5. QuirkyScript 5
@@ -100,30 +99,30 @@ app.get('/flag', function (req, res) {
 
 app.listen(31337)
 ```
+
 ##### Solution
 As in previous QuirkyScripts, this problem also uses a get request therefore we have to append a ? behind the 
 given website link (http://ctf.pwn.sg:8085/flag) and add a 'fifth' and 'six' variable (fifth=&six=), therefore the whole website link will be 
-http://ctf.pwn.sg:8083/flag?fifth=&six=  . After which, we will have to find the correct value for fifth and siz so that the flag can be obtained.
+http://ctf.pwn.sg:8083/flag?fifth=&six=  . After which, we will have to find the correct value for fifth and six so that the flag can be obtained.
 
 After analysis of the above js, we found out that a regular expression is being used to test for the value of 
 fifth and six. 
 
-Regexp info [source] (http://www.regular-expressions.info/anchors.html)
+Regexp info [source](http://www.regular-expressions.info/anchors.html)
 ```
 ^ - matches the position before the first character in the string. 
 $ - matches right after the last character in the string 
 g - global match; find all matches rather than stopping after the first match
 ```
 Apparently the Regexp object keeps track of the last index where the match occured when the global (g) flag is used.
-therfore, when the test method is executed the second time, it will return false even though the string being tested
+therefore, when the test method is executed the second time, it will return false even though the string being tested
 is still the same. [More info](https://stackoverflow.com/questions/1520800/why-does-a-regexp-with-global-flag-give-wrong-results)
 
 
+Final link to get flag: > http://ctf.pwn.sg:8085/flag?fifth=I_AM_ELEET_HAX0R&six=I_AM_ELEET_HAX0R
 
-Final link to get flag: >http://ctf.pwn.sg:8085/flag?fifth=I_AM_ELEET_HAX0R&six=I_AM_ELEET_HAX0R
 
-
-Flag: >CrossCTF{1_am_n1k0las_ray_zhizihizhao}
+Flag: > CrossCTF{1_am_n1k0las_ray_zhizihizhao}
 
 Team J2K
 
