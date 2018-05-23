@@ -74,10 +74,10 @@ we found out that the sorting order is according to string unicode points. Hence
 (20 has a smaller unicode value than 3 but has a larger numerical value than 3), we are able to get the flag.
 Other value pairs such as 11 and 2 will work as well.
 
-Final link to get flag: > http://ctf.pwn.sg:8083/flag?third=20&third=3
+Final link to get flag:  http://ctf.pwn.sg:8083/flag?third=20&third=3
 
 
-Flag: > CrossCTF{th4t_r0ck3t_1s_hug3}
+Flag:  CrossCTF{th4t_r0ck3t_1s_hug3}
 
 
 #### 5. QuirkyScript 5
@@ -119,10 +119,77 @@ therefore, when the test method is executed the second time, it will return fals
 is still the same. [More info](https://stackoverflow.com/questions/1520800/why-does-a-regexp-with-global-flag-give-wrong-results)
 
 
-Final link to get flag: > http://ctf.pwn.sg:8085/flag?fifth=I_AM_ELEET_HAX0R&six=I_AM_ELEET_HAX0R
+Final link to get flag:  http://ctf.pwn.sg:8085/flag?fifth=I_AM_ELEET_HAX0R&six=I_AM_ELEET_HAX0R
 
 
-Flag: > CrossCTF{1_am_n1k0las_ray_zhizihizhao}
+Flag: CrossCTF{1_am_n1k0las_ray_zhizihizhao}
+
+#### 6. BabyWeb
+##### Problem
+```
+The flag is in the flag column of the user 'admin'.
+```
+The source code of the php file used is being given
+```
+ <?php
+if ($_GET['source']) {
+    show_source(__file__);
+    die();
+}
+
+if(!session_id()) {
+    session_start();
+    date_default_timezone_set('Asia/Singapore');
+}
+
+function getAllUsernameLike($username) {
+    $dbhost = 'localhost';
+    $dbuser = 'crossctf';
+    $dbpass = 'CROSSCTFP@SSW0RDV3RYL0NGANDG00DANDVERYLONG';
+    $dbname = 'crossctf';
+    $conn = new mysqli($dbhost, $dbuser, $dbpass, $dbname) or die("Wrong info given");
+    if ($conn->connect_error) {
+        exit();
+    }
+    $return = array();
+
+    $username = str_replace(" ","", $username);
+    $array = array("=", "union", "join", "select", "or", "from", "insert", "delete");
+    if(0 < count(array_intersect(array_map('strtolower', explode(' ', $username)), $array)))
+    {
+        die("die hacker!");
+    }
+    $sql = "SELECT username FROM users WHERE username like '%$username%';";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_array()) {
+        array_push($return, $row);
+    }
+    $conn->close();
+    if ( empty($return) ) {
+        return null;
+    } else {
+        return $return;
+    }
+}
+if (isset($_GET['search']) && isset($_POST['username'])) {
+    $users = getAllUsernameLike($_POST['username']);
+}
+
+?>
+<!--rest of code is html code of the page so not needed -->
+```
+
+##### Solution
+After analysis of the source file, we discovered that the sql query is vulnerable to sql injection as no prepared
+statements is used. However, some basic filtering is done by removing the spaces in the username variable.
+After some research on ways to bypass the filtering, we discovered that parentheses can be used in between the query words to ensure
+that the query is still working without spaces. eg select(flag)from(users).Hence we came up with the query 'union(select(flag)from(users));
+However we discovered that the % at the back of the query is causing some problems. After some research, we discovered a way to ignore the 
+rest of the query by using comments (#).
+ 
+Final SQL query used: 'union(select(flag)from(users));#'
+
+Flag: CrossCTF{SiMpLe_sQl_iNjEcTiOn_aS_WaRmUp}
 
 Team J2K
 
